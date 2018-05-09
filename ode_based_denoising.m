@@ -22,7 +22,8 @@ for i = 1:Ts
     GU=imgaussfilt(u,sigma);
     upx = dpx(GU); umx = dmx(GU);  upy = dpy(GU); umy = dmy(GU);  ux = m(upx, umx);  uy = m(upy, umy);
     gradient_GU= sqrt(ux.^2 + uy.^2);
-    M=max(max(gradient_GU(:))); 
+    M=max(max(gradient_GU(:)));
+    u = u + dt*(gradient_GU.*(u-imgaussfilt(u,3*sigma))-M.*(u-imgaussfilt(u,sigma)));
 if flag==1
     Psnr(i+1) = psnr(imoriginal(:,:,j),uint8(u));
 else
